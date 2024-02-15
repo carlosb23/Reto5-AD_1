@@ -3,7 +3,6 @@ package com.example.reto5ad_1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +14,11 @@ public class Tiempo_Controller {
 
     @Autowired
     private TiempoRepository tiempoRepository;
+
+    @GetMapping("/ciudad/contiene/{nombre}")
+    public List<Tiempo> findTiempoByCiudadContaining(@PathVariable String nombre) {
+        return tiempoRepository.findAllByCiudadContaining(nombre);
+    }
 
     @GetMapping("/all")
     public List<Tiempo> getAll(){
@@ -29,6 +33,23 @@ public class Tiempo_Controller {
         return "id no encontrado por favor comprube su base de datos";
     }
 
+    @GetMapping("/temperatura/{temperatura}")
+    public List<Tiempo>findAllByTemperaturaAndCondicionesClimaticas(@PathVariable double temperatura){
+        return tiempoRepository.findAllByTemperaturaAndCondicionesClimaticas(temperatura);
+    }
+
+    @GetMapping("/count/{temperatura}")
+    public String countCitiesWithHighTemperature(@PathVariable double temperatura){
+        long count = tiempoRepository.countCitiesWithHighTemperature(temperatura);
+        return "Numero de ciudades: " +count;
+    }
+
+
+    @GetMapping("/promedio")
+    public String findAverageTemperature(){
+        double promedio = tiempoRepository.findAverageTemperature();
+        return "Promedio de temperatura: " +promedio;
+    }
     @PostMapping
     public Tiempo addTiempo(@RequestBody Tiempo tiempo) {
         return tiempoRepository.save(tiempo);
