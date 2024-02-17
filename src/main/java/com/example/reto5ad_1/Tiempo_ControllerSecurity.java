@@ -9,30 +9,57 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador para manejar las solicitudes relacionadas con el tiempo con seguridad.
+ */
 @RestController
 @RequestMapping("/ciudad")
 public class Tiempo_ControllerSecurity {
 
+    /**
+     * Repositorio para acceder a los datos del tiempo.
+     */
     @Autowired
     private TiempoRepository tiempoRepository;
 
+    /**
+     * Componente de seguridad para validar tokens.
+     */
     @Autowired
     private Security security;
 
+    /**
+     * Obtiene todos los registros de tiempo.
+     *
+     * @return Lista de todos los objetos Tiempo en la base de datos.
+     */
     @GetMapping("/all")
     public List<Tiempo> getAll(){
         return tiempoRepository.findAll();
     }
 
+    /**
+     * Obtiene un solo registro de tiempo por su ID.
+     *
+     * @param id El ID del registro de tiempo que se desea obtener.
+     * @return Una cadena que representa el registro de tiempo si se encuentra, de lo contrario, un mensaje de error.
+     */
     @GetMapping("/{id}")
     public String getOne(@PathVariable Long id){
         if(tiempoRepository.existsById(id)){
             return tiempoRepository.findById(id).get().toString();
         }
-        return "id no encontrado por favor comprube su base de datos";
+        return "id no encontrado por favor compruebe su base de datos";
     }
 
-    @PostMapping
+    /**
+     * Agrega un nuevo registro de tiempo a la base de datos con seguridad.
+     *
+     * @param tiempo El objeto Tiempo que se desea agregar.
+     * @param token El token de seguridad necesario para realizar la operación.
+     * @return Una respuesta ResponseEntity que indica el resultado de la operación.
+     */
+    @PostMapping("/addsecurity")
     public ResponseEntity<Tiempo> addTiempo(@RequestBody Tiempo tiempo, @RequestParam String token) {
         ResponseEntity<Tiempo> respuesta = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
@@ -43,7 +70,15 @@ public class Tiempo_ControllerSecurity {
         return respuesta;
     }
 
-    @PutMapping("/{id}")
+    /**
+     * Actualiza un registro de tiempo existente en la base de datos con seguridad.
+     *
+     * @param id El ID del registro de tiempo que se desea actualizar.
+     * @param tiempoDetails El objeto Tiempo con los detalles actualizados.
+     * @param token El token de seguridad necesario para realizar la operación.
+     * @return Una respuesta ResponseEntity que indica el resultado de la operación.
+     */
+    @PutMapping("/solicitosecurity/{id}")
     public ResponseEntity<Tiempo> updateTiempo(@PathVariable Long id, @RequestBody Tiempo tiempoDetails, @RequestParam String token) {
         ResponseEntity<Tiempo> respuesta = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
@@ -67,7 +102,14 @@ public class Tiempo_ControllerSecurity {
         return respuesta;
     }
 
-    @DeleteMapping("/{id}")
+    /**
+     * Elimina un registro de tiempo de la base de datos con seguridad.
+     *
+     * @param id El ID del registro de tiempo que se desea eliminar.
+     * @param token El token de seguridad necesario para realizar la operación.
+     * @return Una respuesta ResponseEntity que indica el resultado de la operación.
+     */
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Tiempo> delete(@PathVariable Long id, @RequestParam String token) {
         ResponseEntity<Tiempo> respuesta = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
