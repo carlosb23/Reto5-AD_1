@@ -1,5 +1,5 @@
 
-# Api Rest Sring Boot
+# Api Rest Spring Boot
 
 Imagina que estás trabajando en el desarrollo de una aplicación móvil para el turismo, y necesitas crear una API REST que permita realizar operaciones básicas de lectura y escritura sobre distintos recursosrelacionados con el turismoque se almacenan en una base de datosen nuestro propio servidor.Queremos realizar una primera versión de la API REST en local para realizar pruebas desde el emulador.
 
