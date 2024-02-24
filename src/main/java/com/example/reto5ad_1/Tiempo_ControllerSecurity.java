@@ -78,7 +78,7 @@ public class Tiempo_ControllerSecurity {
      * @param token El token de seguridad necesario para realizar la operación.
      * @return Una respuesta ResponseEntity que indica el resultado de la operación.
      */
-    @PutMapping("/solicitosecurity/{id}")
+    @PutMapping("/actualizarsecurity/{id}")
     public ResponseEntity<Tiempo> updateTiempo(@PathVariable Long id, @RequestBody Tiempo tiempoDetails, @RequestParam String token) {
         ResponseEntity<Tiempo> respuesta = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 

@@ -108,7 +108,7 @@ public class Tiempo_Controller {
      * @param tiempoDetails El objeto Tiempo con los detalles actualizados.
      * @return Una respuesta ResponseEntity que indica el estado de la operación de actualización.
      */
-    @PutMapping("/solicito/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<Tiempo> updateTiempo(@PathVariable Long id, @RequestBody Tiempo tiempoDetails) {
         Optional<Tiempo> optionalTiempo = tiempoRepository.findById(id);
         if (optionalTiempo.isPresent()) {
